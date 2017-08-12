@@ -46,11 +46,11 @@ The minimal drop HTML markup looks like this:
 
 Dark
 
-![Dark Theme Preview](dark.png)
+![Dark Theme Preview](dark.jpg)
 
 Light
 
-![Light Theme Preview](light.png)
+![Light Theme Preview](light.jpg)
 
 ## License
 
