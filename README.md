@@ -1,5 +1,5 @@
 # drop
-Pure SCSS drop
+💧 Pure SCSS drop. Themeable.
 
 ## How To Use
 
