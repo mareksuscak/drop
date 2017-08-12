@@ -1,0 +1,251 @@
+$dropArrowOffset: 2px;
+$dropArrowRadius: 7px;
+
+$dropMenuBorderRadius: 5px;
+$dropMenuPrimaryColor: lighten(#111, 15%);
+$dropMenuLighterColor: #bdc3c7;
+$dropMenuSecondaryColor: #148a73;
+
+$dropSafeZoneOverlap: 10px;
+
+$dropAnimationSpeedMultiplier: 1;
+
+/**********************
+ * Drop Block
+ **********************/
+
+.drop {
+  cursor: pointer;
+  display: inline-block;
+  min-width: $dropArrowRadius * 2;
+  overflow: visible;
+  position: relative;
+  text-align: center;
+
+  // Fixes a font rendering issue in Safari
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+
+  &.is-disabled {
+    cursor: not-allowed;
+  }
+}
+
+/**********************
+ * Drop Content Element
+ **********************/
+
+.drop__content {
+  & {
+    position: absolute;
+    visibility: hidden;
+    width: 100%;
+  }
+
+  // Position depends on the current drop variation.
+  .drop--down & { top:    100% }
+  .drop--up   & { bottom: 100% }
+
+  // Make visible when drop is open.
+  .drop:not(.is-disabled).is-open &,
+  .drop:not(.is-disabled):hover   & {
+    visibility: visible;
+  }
+
+  // Fade In Transition Modifier
+
+  &.-transition-fade-in {
+    opacity: 0;
+    transition: visibility 0s linear, opacity 0.25s * $dropAnimationSpeedMultiplier ease-in;
+    transition-delay: 0.1s;
+  }
+
+  .drop.is-open &.-transition-fade-in,
+  .drop:hover   &.-transition-fade-in {
+    opacity: 1;
+    transition-delay: 0s;
+  }
+
+  // Slide In Transition Modifier
+
+  &.-transition-slide-in {
+    opacity: 0;
+    transition: visibility 0s linear, opacity 0.25s * $dropAnimationSpeedMultiplier ease, transform 0.25s * $dropAnimationSpeedMultiplier ease;
+    transition-delay: 0.1s;
+  }
+
+  .drop--up   &.-transition-slide-in { transform: translateY(-10px) }
+  .drop--down &.-transition-slide-in { transform: translateY(10px) }
+
+  .drop.is-open &.-transition-slide-in,
+  .drop:hover   &.-transition-slide-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+}
+
+/**********************
+ * Drop Arrow
+ **********************/
+
+.drop-arrow {
+  & {
+    border-left: $dropArrowRadius solid transparent;
+    border-right: $dropArrowRadius solid transparent;
+    height: 0;
+    margin: 0 auto;
+    width: 0;
+  }
+
+  .drop--up & {
+    border-top: $dropArrowRadius solid $dropMenuPrimaryColor;
+    margin-bottom: $dropArrowOffset;
+  }
+
+  .drop--down & {
+    border-bottom: $dropArrowRadius solid $dropMenuPrimaryColor;
+    margin-top: $dropArrowOffset;
+  }
+
+  // Secondary Color Scheme
+  .drop--up.-color-secondary & {
+    border-top-color: $dropMenuSecondaryColor;
+  }
+
+  .drop--down.-color-secondary & {
+    border-bottom-color: $dropMenuSecondaryColor;
+  }
+
+  // Ligher Default Color Scheme
+  .drop--up.-color-lighter & {
+    border-top-color: $dropMenuLighterColor;
+  }
+
+  .drop--down.-color-lighter & {
+    border-bottom-color: $dropMenuLighterColor;
+  }
+}
+
+/**********************
+ * Drop List
+ **********************/
+
+.drop-list {
+  & {
+    min-width: 100%;
+    background-color: $dropMenuPrimaryColor;
+    font-size: 0.8em;
+    font-weight: 400;
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  // Secondary Color Scheme
+  .drop.-color-secondary & {
+    background-color: $dropMenuSecondaryColor;
+  }
+
+  // Ligher Default Color Scheme
+  .drop.-color-lighter & {
+    background-color: $dropMenuLighterColor;
+  }
+
+  // Outside effects
+  .drop--down & { top:    100%; }
+  .drop--up   & { bottom: 100%; }
+
+  // Pull Modifiers
+  &.-position-left.-pull-left  { margin-right: $dropArrowRadius * 1.5 }
+  &.-position-left.-pull-right { margin-right: -$dropArrowRadius * 1.5 }
+  &.-position-center.-pull-left  { margin-left: -$dropArrowRadius * 1.5 }
+  &.-position-center.-pull-right { margin-left: $dropArrowRadius * 1.5 }
+  &.-position-right.-pull-left  { margin-left: -$dropArrowRadius * 1.5 }
+  &.-position-right.-pull-right { margin-left: $dropArrowRadius * 1.5 }
+
+  // Position Modifier
+  &.-position-center { left:  50%; transform: translateX(-50%) }
+  &.-position-left   { right: 0 }
+  &.-position-right  { left:  0 }
+
+  // Size Modifier
+  &.-size-medium { width: 150px }
+  &.-size-large { width: 225px }
+
+  // Rounded Borders Modifier
+  &.-border-rounded { border-radius: $dropMenuBorderRadius }
+
+  // Safe Zone Element
+
+  .drop--down &::before,
+  .drop--up &::after {
+    content: " ";
+    height: $dropArrowRadius + $dropArrowOffset + $dropSafeZoneOverlap;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  .drop--down &::before   { bottom: 100% }
+  .drop--up   &::after    { top:    100% }
+}
+
+/**************************
+ * Drop List Item Element
+ **************************/
+
+.drop-list__item {
+  display: block;
+}
+
+/**************************
+ * Drop List Button Element
+ **************************/
+
+.drop-list__btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 2px;
+  color: #FFF;
+  cursor: pointer;
+  font: inherit;
+  display: block;
+  outline: none;
+  padding: 11.2px;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+}
+
+.drop-list__btn.is-selected {
+  background-color: lighten($dropMenuPrimaryColor, 12%);
+
+  // Secondary Color Scheme
+  .drop.-color-secondary & {
+    background-color: lighten($dropMenuSecondaryColor, 12%);
+  }
+
+  // Lighter Default Color Scheme
+  .drop.-color-lighter & {
+    background-color: darken($dropMenuLighterColor, 8%);
+  }
+}
+
+.drop-list__btn:hover {
+  background-color: lighten($dropMenuPrimaryColor, 10%);
+
+  // Secondary Color Scheme
+  .drop.-color-secondary & {
+    background-color: lighten($dropMenuSecondaryColor, 10%);
+  }
+
+  // Lighter Default Color Scheme
+  .drop.-color-lighter & {
+    background-color: darken($dropMenuLighterColor, 10%);
+  }
+}
