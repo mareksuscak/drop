@@ -56,6 +56,23 @@ Light
 
 ![Light Theme Preview](light.jpg)
 
+## Example
+
+```html
+<div class="drop -color-lighter drop--down">
+  <button class="more">More</button>
+
+  <div class="drop__content -transition-slide-in">
+    <div class="drop-arrow"></div>
+
+    <div class="drop-list -size-medium -position-right -border-rounded">
+      <button class="drop-list__btn">Edit</button>
+      <button class="drop-list__btn">Delete</button>
+    </div>
+  </div>
+</div>
+```
+
 ## License
 
 See the [LICENSE](LICENSE)
